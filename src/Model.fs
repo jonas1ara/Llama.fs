@@ -13,7 +13,7 @@ let inline toInt (x: int64)  : int     = int     x
 open type TorchSharp.torch
 open type TorchSharp.torch.nn
 
-// ── ModelArgs ────────────────────────────────────────────────────────────────
+// ModelArgs
 
 type ModelArgs() =
     [<JsonPropertyName("dim")>]            member val Dim              : int    = 4096   with get, set
@@ -29,7 +29,7 @@ type ModelArgs() =
     [<JsonPropertyName("max_seq_len")>]    member val MaxSeqLen        : int    = 1024  with get, set
     member _.Dtype = ScalarType.BFloat16
 
-// ── RMSNorm ──────────────────────────────────────────────────────────────────
+// RMSNorm
 
 type RMSNorm(args: ModelArgs) =
     inherit Module<Tensor, Tensor>("RMSNorm")
@@ -38,7 +38,7 @@ type RMSNorm(args: ModelArgs) =
     let norm (x: Tensor) = x * torch.rsqrt(x.mul(x).mean([|-1L|], keepdim = true) + args.NormEps)
     override _.forward(input) = weight * (norm (input.to_type(ScalarType.Float32))).type_as(input)
 
-// ── SelfAttention ────────────────────────────────────────────────────────────
+// SelfAttention
 
 type SelfAttention(args: ModelArgs) =
     inherit Module<Tensor, int, Tensor, Tensor, Tensor>("SelfAttention")
@@ -83,7 +83,7 @@ type SelfAttention(args: ModelArgs) =
         let out    = torch.matmul(functional.softmax(scores, dim = -1L), vals.transpose(1,2))
         wo.forward(out.transpose(1,2).contiguous().view(i64 bs, i64 sl, -1L))
 
-// ── FeedForward ──────────────────────────────────────────────────────────────
+// FeedForward 
 
 type FeedForward(args: ModelArgs) =
     inherit Module<Tensor, Tensor>("FeedForward")
@@ -97,7 +97,7 @@ type FeedForward(args: ModelArgs) =
     do base.RegisterComponents()
     override _.forward(x) = w2.forward(functional.silu(w1.forward(x)) * w3.forward(x))
 
-// ── EncoderBlock ─────────────────────────────────────────────────────────────
+// EncoderBlock
 
 type EncoderBlock(args: ModelArgs) =
     inherit Module<Tensor, int, Tensor, Tensor, Tensor>("EncoderBlock")
@@ -110,7 +110,7 @@ type EncoderBlock(args: ModelArgs) =
         let h = attention.forward(attention_norm.forward(x), pos, freqs, mask) + x
         feed_forward.forward(ffn_norm.forward(h)) + h
 
-// ── Transformer ──────────────────────────────────────────────────────────────
+// Transformer
 
 type Transformer(args: ModelArgs) =
     inherit Module<Tensor, int, Tensor>("Transformer")

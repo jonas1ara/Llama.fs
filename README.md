@@ -1,4 +1,4 @@
-# llama.fs
+# Llama.fs
 
 **LLM inference in F#**
 
@@ -8,7 +8,7 @@ A from-scratch port of the [Llama 3.2](https://ai.meta.com/blog/llama-3-2-connec
 
 ## What is it?
 
-`llama.fs` lets you run a Llama language model locally from a .NET 10 F# application — no Python, no Ollama, no external runtime. It loads the original Meta checkpoint (`.pth` file) directly and performs autoregressive text generation using the same architecture as the reference Python implementation.
+`Llama.fs` lets you run a Llama language model locally from a .NET 10 F# application — no Python, no Ollama, no external runtime. It loads the original Meta checkpoint (`.pth` file) directly and performs autoregressive text generation using the same architecture as the reference Python implementation.
 
 The interactive loop lets you chat with the model from the terminal, using the Llama 3 instruct template so the model responds as an assistant.
 
@@ -116,7 +116,7 @@ let modelFolder = @"C:\Models\Llama3.2-1B-Instruct"
 3. Run:
 
 ```bash
-dotnet run
+dotnet run --project src -c Release
 ```
 
 The first run will download NuGet packages (~2 GB for `libtorch-cuda-12.1-win-x64`). Loading the checkpoint takes ~25 seconds on first run.
@@ -197,12 +197,16 @@ be a great fit for you!
 
 ```
 llama.fs/
-├── llama.fs.fsproj   # Project file (.NET 10, F# 9 preview)
-├── Utils.fs          # RoPE utilities
-├── Tokenizer.fs      # Tiktoken BPE tokenizer
-├── Model.fs          # Transformer architecture
-├── Llama.fs          # Model loading and generation
-└── Program.fs        # Interactive CLI entry point
+├── src/
+│   ├── llama.fs.fsproj   # Project file (.NET 10, F# 9 preview)
+│   ├── Utils.fs          # RoPE utilities
+│   ├── Tokenizer.fs      # Tiktoken BPE tokenizer
+│   ├── Model.fs          # Transformer architecture
+│   ├── Llama.fs          # Model loading and generation
+│   └── Program.fs        # Interactive CLI entry point
+├── llama.fs.sln
+├── README.md
+└── .gitignore
 ```
 
 ---
@@ -213,6 +217,7 @@ This project was inspired by and based on:
 
 - **[hkproj/pytorch-llama](https://github.com/hkproj/pytorch-llama)** — LLaMA implemented from scratch in PyTorch by Umar Jamil. The primary reference for the architecture and generation logic.
 - **[ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)** — The de-facto standard for efficient LLM inference in C/C++. Inspiration for running LLMs natively without Python.
+- **[Microsoft.ML.GenAI.LLaMA](https://github.com/dotnet/machinelearning/tree/main/src/Microsoft.ML.GenAI.LLaMA)** — Official LLaMA implementation in the ML.NET repository, also built on TorchSharp.
 - **[Microsoft.ML.GenAI.LLaMA](https://github.com/dotnet/machinelearning/tree/main/src/Microsoft.ML.GenAI.LLaMA)** 
 — Official LLaMA implementation in the ML.NET repository, also built on TorchSharp.
 

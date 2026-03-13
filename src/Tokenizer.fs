@@ -7,7 +7,7 @@ open System.Text
 open System.Text.RegularExpressions
 open Microsoft.ML.Tokenizers
 
-// ── Interface ────────────────────────────────────────────────────────────────
+// Interface
 
 type ITokenizer =
     abstract Encode   : text: string * bos: bool * eos: bool -> int[]
@@ -17,7 +17,7 @@ type ITokenizer =
     abstract BosId    : int
     abstract EosId    : int
 
-// ── BPETokenizer (Llama 2 / GPT-2 style) ────────────────────────────────────
+// BPETokenizer (Llama 2 / GPT-2 style)
 
 type private Norm() =
     inherit Normalizer()
@@ -68,7 +68,7 @@ type BPETokenizer(vocabPath: string, mergesPath: string, ?addPrecedingSpace: boo
             let s = tokenizer.Decode(tokens) |> Option.ofObj |> Option.defaultValue ""
             if addSpace then s.TrimStart() else s
 
-// ── LlamaTokenizer (tiktoken, Llama 3.x) ────────────────────────────────────
+// LlamaTokenizer (tiktoken, Llama 3.x)
 
 [<AutoOpen>]
 module private TiktokenHelpers =
