@@ -222,8 +222,6 @@ This project was inspired by and based on:
 - **[hkproj/pytorch-llama](https://github.com/hkproj/pytorch-llama)** — LLaMA implemented from scratch in PyTorch by Umar Jamil. The primary reference for the architecture and generation logic.
 - **[ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp)** — The de-facto standard for efficient LLM inference in C/C++. Inspiration for running LLMs natively without Python.
 - **[Microsoft.ML.GenAI.LLaMA](https://github.com/dotnet/machinelearning/tree/main/src/Microsoft.ML.GenAI.LLaMA)** — Official LLaMA implementation in the ML.NET repository, also built on TorchSharp.
-- **[Microsoft.ML.GenAI.LLaMA](https://github.com/dotnet/machinelearning/tree/main/src/Microsoft.ML.GenAI.LLaMA)** 
-— Official LLaMA implementation in the ML.NET repository, also built on TorchSharp.
 
 ### Learning resources
 
