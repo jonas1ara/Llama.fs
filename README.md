@@ -1,12 +1,12 @@
 # Llama.fs
 
-
-https://github.com/user-attachments/assets/4034b882-ebd3-4edd-952b-d9b8b1483716
-
-
 **LLM inference in F#**
 
 A from-scratch port of the [Llama 3.2](https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/) inference engine written in F#, running on .NET 10 with [TorchSharp](https://github.com/dotnet/TorchSharp). Supports CUDA for GPU acceleration.
+
+![llama](https://github.com/user-attachments/assets/c89aac4b-f256-42df-9078-af725caa51fe)
+
+_Loot Llama from Fortnite, representing the Llama model in this post._
 
 ---
 
@@ -122,6 +122,8 @@ let modelFolder = @"C:\Models\Llama3.2-1B-Instruct"
 ```bash
 dotnet run --project src -c Release
 ```
+
+https://github.com/user-attachments/assets/4034b882-ebd3-4edd-952b-d9b8b1483716
 
 The first run will download NuGet packages (~2 GB for `libtorch-cuda-12.1-win-x64`). Loading the checkpoint takes ~25 seconds on first run.
 
