@@ -115,7 +115,7 @@ type EncoderBlock(args: ModelArgs) =
 type Transformer(args: ModelArgs) =
     inherit Module<Tensor, int, Tensor>("Transformer")
     let tok_embeddings = Embedding(i64 args.VocabSize, i64 args.Dim, dtype = args.Dtype)
-    let layers = ModuleList<Module<Tensor, int, Tensor, Tensor, Tensor>>([| for _ in 0..args.NLayers-1 -> EncoderBlock(args) :> Module<Tensor, int, Tensor, Tensor, Tensor> |])
+    let layers = ModuleList<Module<Tensor, int, Tensor, Tensor, Tensor>>([| for _ in 0..args.NLayers-1 -> new EncoderBlock(args) :> Module<Tensor, int, Tensor, Tensor, Tensor> |])
     let norm   = new RMSNorm(args)
     let output = Linear(i64 args.Dim, i64 args.VocabSize, hasBias = false, dtype = args.Dtype)
     let freqs  = Utils.precomputeThetaPosFrequencies (args.Dim / args.NHeads) (args.MaxSeqLen * 2) args.RopeTheta
@@ -130,7 +130,7 @@ type Transformer(args: ModelArgs) =
                 let dev = h.device
                 let m   = torch.zeros(i64 sl, i64 sl, dtype = System.Nullable(ScalarType.Float32), device = dev).fill_(System.Single.NegativeInfinity).triu(diagonal = 1)
                 torch.hstack([| torch.zeros(i64 sl, i64 startPos, device = dev); m |]).type_as(h)
-            else null
+            else Unchecked.defaultof<Tensor>
         let mutable h'' = h
         for i in 0..args.NLayers-1 do h'' <- layers.[i].forward(h'', startPos, f, mask)
         output.forward(norm.forward(h''))

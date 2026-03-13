@@ -47,7 +47,9 @@ type BPETokenizer(vocabPath: string, mergesPath: string, ?addPrecedingSpace: boo
 
     let bpe       = Bpe(vocabPath, mergesPath)
     let tokenizer = Tokenizer(bpe, preTokenizer = PreTok(), normalizer = Norm())
-    do  tokenizer.Decoder <- TokDecoder(tokenizer.Model.IdToToken(bosId'), tokenizer.Model.IdToToken(eosId'))
+    do  tokenizer.Decoder <- TokDecoder(
+            tokenizer.Model.IdToToken(bosId') |> Option.ofObj |> Option.defaultValue "",
+            tokenizer.Model.IdToToken(eosId') |> Option.ofObj |> Option.defaultValue "")
 
     interface ITokenizer with
         member _.VocabSize = tokenizer.Model.GetVocabSize()
@@ -63,7 +65,7 @@ type BPETokenizer(vocabPath: string, mergesPath: string, ?addPrecedingSpace: boo
                if eos then yield eosId' |]
 
         member _.Decode(tokens) =
-            let s = tokenizer.Decode(tokens)
+            let s = tokenizer.Decode(tokens) |> Option.ofObj |> Option.defaultValue ""
             if addSpace then s.TrimStart() else s
 
 // ── LlamaTokenizer (tiktoken, Llama 3.x) ────────────────────────────────────

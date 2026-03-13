@@ -28,7 +28,7 @@ let main _ =
 
     let rec loop () =
         printf "You: "
-        let input = Console.ReadLine()
+        let input = Console.ReadLine() |> Option.ofObj |> Option.defaultValue ""
         if not (String.IsNullOrWhiteSpace input) && not (input.Equals("exit", StringComparison.OrdinalIgnoreCase)) then
             let prompt =
                 "<|start_header_id|>system<|end_header_id|>\n\n" +

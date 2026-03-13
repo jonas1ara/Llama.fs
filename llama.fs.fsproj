@@ -3,7 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>llama.fs</AssemblyName>
     <RootNamespace>LlamaFS</RootNamespace>
+    <Description>LLM inference in F#</Description>
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
   </PropertyGroup>

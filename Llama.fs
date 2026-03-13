@@ -49,12 +49,12 @@ type LLaMA private (transformer: Model.Transformer, tokenizer: Tokenizer.ITokeni
 
         torch.set_default_dtype(torch.bfloat16)
 
-        let model = Model.Transformer(modelArgs)
+        let model = new Model.Transformer(modelArgs)
         let loadedParams = Dictionary<string, bool>()
-        model.load_py(location = weightPath, strict = false, loadedParameters = loadedParams)
+        model.load_py(location = weightPath, strict = false, loadedParameters = loadedParams) |> ignore
 
-        for KeyValue(key, value) in loadedParams |> Seq.sortBy (fun kv -> kv.Key) do
-            printfn "loadedParameters: %s %b" key value
+        // for KeyValue(key, value) in loadedParams |> Seq.sortBy (fun kv -> kv.Key) do
+            // printfn "loadedParameters: %s %b" key value
 
         let model = model.``to``(device)
         sw.Stop()
