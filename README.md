@@ -2,7 +2,7 @@
 
 **LLM inference in F#**
 
-A from-scratch port of the [Llama 3.2](https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/) inference engine written in F#, running on .NET 10 with [TorchSharp](https://github.com/dotnet/TorchSharp). Supports CUDA for GPU acceleration.
+A from-scratch implementation of the [Llama 3.2](https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/) inference engine written in F#, running on .NET 10 with [TorchSharp](https://github.com/dotnet/TorchSharp). Supports CUDA for GPU acceleration.
 
 ![llama](https://github.com/user-attachments/assets/c89aac4b-f256-42df-9078-af725caa51fe)
 
